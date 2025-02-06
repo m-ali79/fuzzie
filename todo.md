@@ -2,10 +2,10 @@
 
 ## Setup
 
-- [ ] Integrate Shadcn ui
-- [ ] Choose Theme and test the theme
+- [x] Integrate Shadcn ui
+- [x] Choose Theme and test the theme
 - [ ] integrate dark mode
-- [ ] Choose Font
+- [x] Choose Font
 
 ## Landing Page
 

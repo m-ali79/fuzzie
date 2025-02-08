@@ -4,7 +4,7 @@ import { ContainerScroll } from "@/components/landing/scroll-animation";
 import Image from "next/image";
 import { InfiniteMovingCards } from "@/components/landing/infinite-moving-cards";
 import { HeroParallax } from "@/components/landing/hero-parallex";
-import { LampDemo } from "@/components/landing/lamp";
+import { LampComponent } from "@/components/landing/lamp";
 import {
   CardBody,
   CardContainer,
@@ -80,14 +80,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-neutral-950 text-white pt-[30rem] h-full px-[6rem] flex flex-col gap-10 justify-center items-center">
+      <section className="bg-neutral-950 text-white pt-[30rem] h-full px-4  flex flex-col gap-10 justify-center items-center">
         <div className="w-full h-full max-w-min mx-auto">
           {" "}
           <InfiniteMovingCards
             direction="left"
             pauseOnHover
             speed="fast"
-            className="-mt-[15rem]"
+            className="-mt-[15rem]  md:mx-8"
             items={[
               "1.png",
               "2.png",
@@ -106,8 +106,8 @@ export default function Home() {
       </section>
 
       <section className="bg-neutral-950 text-white">
-        <LampDemo />
-        <div className="flex flex-wrap gap-10 items-center justify-center">
+        <LampComponent />
+        <div className="flex flex-wrap gap-10 items-center justify-center -mt-[13rem] pb-8">
           {cards.map((card) => (
             <CardContainer className="inter-var" key={card.name}>
               <CardBody className="bg-black relative group/card  dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[20rem] h-auto rounded-xl p-6 border  ">

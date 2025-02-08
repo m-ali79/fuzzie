@@ -52,7 +52,7 @@ export default function Home() {
 
       {/* Hero Section */}
       <section className="py-20  bg-neutral-950 h-[55rem] text-white">
-        <div className="flex flex-col justify-center items-center  px-[5rem] mt-20">
+        <div className="flex flex-col justify-center items-center  px-[5rem] mt-20 2xl:gap-y-28">
           <Button
             size={"lg"}
             className="p-8 mb-8 md:mb-0  md:text-2xl w-full sm:w-fit border-t-2 rounded-full border-[#4D4D4D] bg-[#1F1F1F] hover:bg-white group transition-all flex items-center justify-center gap-4 hover:shadow-xl hover:shadow-neutral-500 duration-500"
@@ -87,7 +87,7 @@ export default function Home() {
             direction="left"
             pauseOnHover
             speed="fast"
-            className="-mt-[15rem]  md:mx-8"
+            className="2xl:-mt-[10rem] -mt-[15rem]  md:mx-8"
             items={[
               "1.png",
               "2.png",

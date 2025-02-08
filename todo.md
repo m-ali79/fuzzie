@@ -11,8 +11,8 @@
 
 - [ ] Learn css gird by doing
 - [ ] Complete Fixed transparent navbar
-- [ ] complete the landing Page, acternity ui components
-- [ ] make landing page completely responsive
+- [x] complete the landing Page, acternity ui components
+- [x] make landing page completely responsive
 
 ## Auth
 

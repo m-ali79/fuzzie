@@ -18,6 +18,15 @@ body,
   display: none !important;
 }
 
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

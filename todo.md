@@ -4,19 +4,19 @@
 
 - [x] Integrate Shadcn ui
 - [x] Choose Theme and test the theme
-- [ ] integrate dark mode
+- [x] integrate dark mode
 - [x] Choose Font
 
 ## Landing Page
 
 - [ ] Learn css gird by doing
-- [ ] Complete Fixed transparent navbar
+- [x] Complete Fixed transparent navbar
 - [x] complete the landing Page, acternity ui components
 - [x] make landing page completely responsive
 
 ## Auth
 
-- [ ] integrate custom auth
+- [ ] Choose Auth Providers/library
 - [ ] Choose google oAuth Scopes
 - [ ] user Profile Button
 
@@ -36,15 +36,18 @@
 
 - [ ] Design Dashboard Static Page
 
+## Connections
+
+- [ ] configure API access for all platforms
+- [ ] Make Routes for all platforms integration with url
+- [ ] use Webhooks to create entries in Dashboard
+- [ ] use Webhooks to run the Cron Job to run the workflow
+
 ## Workflows
 
 - [ ] Create a Workflow
 - [ ] get all the Workflows
 - [ ] Canvas to create workflow sequence
-
-## Connections
-
-- [ ] implement all the socials and get api access
 
 ## Settings
 
@@ -54,3 +57,14 @@
 
 - [ ] allow user to upgrade to paid plans
 - [ ] integrate stripe
+
+# Architecture
+- landing Page
+- register/signin/oAuth=>(google,Github) Page
+- Connections=> (configuring Apis, main Ui, route for each service integration, redirection/callback url, apis to create entries/Webhooks verfication)
+- Workflows => (create workflow, react flow to create workflow sequence, testing of workflow,  Cron job to run workflow, accounts integration if not already),
+- settings => (populate from with email/name/pic, delete pic, upload new pic),
+- billing => (remaining credits, upgrade to higher plans, stripe integration)
+
+
+

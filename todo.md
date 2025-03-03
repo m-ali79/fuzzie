@@ -16,8 +16,8 @@
 
 ## Auth
 
-- [ ] Choose Auth Providers/library
-- [ ] Choose google oAuth Scopes
+- [x] Choose Auth Providers/library
+- [x] Choose google oAuth Scopes
 - [ ] user Profile Button
 
 ## middleware
@@ -27,8 +27,8 @@
 
 ## main app Shared Layout
 
-- [ ] complete Sidebar
-- [ ] integrate dark/light mode switch
+- [x] complete Sidebar
+- [x] integrate dark/light mode switch
 - [ ] complete inforbar
 - [ ] keep track of credits (consumed/total)
 
@@ -58,13 +58,15 @@
 - [ ] allow user to upgrade to paid plans
 - [ ] integrate stripe
 
-# Architecture
+## Architecture
+
 - landing Page
 - register/signin/oAuth=>(google,Github) Page
 - Connections=> (configuring Apis, main Ui, route for each service integration, redirection/callback url, apis to create entries/Webhooks verfication)
-- Workflows => (create workflow, react flow to create workflow sequence, testing of workflow,  Cron job to run workflow, accounts integration if not already),
+- Workflows => (create workflow, react flow to create workflow sequence, testing of workflow, Cron job to run workflow, accounts integration if not already),
 - settings => (populate from with email/name/pic, delete pic, upload new pic),
 - billing => (remaining credits, upgrade to higher plans, stripe integration)
 
+## problems
 
-
+- [ ] refreshToken is not generating beccuase better url does not contain acces-type=offline

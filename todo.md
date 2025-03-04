@@ -70,3 +70,4 @@
 ## problems
 
 - [ ] refreshToken is not generating beccuase better url does not contain acces-type=offline
+- [x] check based on scopes instead of accessToken.

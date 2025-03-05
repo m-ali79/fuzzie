@@ -8,22 +8,23 @@ datasource db {
 }
 
 model User {
-  id            String    @id
-  name          String
-  email         String
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+  id              String           @id @default(cuid())
+  name            String
+  email           String
+  emailVerified   Boolean
+  image           String?
+  createdAt       DateTime
+  updatedAt       DateTime
+  sessions        Session[]
+  accounts        Account[]
+  discordWebhooks DiscordWebhook[]
 
   @@unique([email])
   @@map("user")
 }
 
 model Session {
-  id        String   @id
+  id        String   @id @default(cuid())
   expiresAt DateTime
   token     String
   createdAt DateTime
@@ -38,8 +39,8 @@ model Session {
 }
 
 model Account {
-  id                    String    @id
-  accountId             String
+  id                    String    @id @default(cuid())
+  accountId             String?
   providerId            String
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -50,14 +51,14 @@ model Account {
   refreshTokenExpiresAt DateTime?
   scope                 String?
   password              String?
-  createdAt             DateTime
-  updatedAt             DateTime
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
   @@map("account")
 }
 
 model Verification {
-  id         String    @id
+  id         String    @id @default(cuid())
   identifier String
   value      String
   expiresAt  DateTime
@@ -65,6 +66,20 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model DiscordWebhook {
+  id          String  @id @default(cuid())
+  webhookId   String
+  webhookUrl  String
+  webhookName String
+  guildId     String
+  // guildName   String
+  channelId   String
+  User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String?
+
+  @@map("discordWebhook")
 }
 
 // Next planning

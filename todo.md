@@ -70,4 +70,6 @@
 ## problems
 
 - [ ] refreshToken is not generating beccuase better url does not contain acces-type=offline
-- [x] check based on scopes instead of accessToken.
+- [ ] \*\*check based on scopes instead of accessToken.
+- [ ] implement the refresh accessToken logic and if somehow refreshToken gets expire e.g (invalid_grant)
+      then delete the previous user account and ask for new signin

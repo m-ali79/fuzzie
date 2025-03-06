@@ -25,17 +25,25 @@ export const GET = async (request: NextRequest) => {
       );
     }
 
-    const tokenResponse = await fetch("https://discord.com/api/oauth2/token", {
+    const clientId = process.env.OAUTH_CLIENT_ID;
+    const clientSecret = process.env.OAUTH_CLIENT_SECRET;
+    const redirectUri = process.env.OAUTH_REDIRECT_URI;
+
+    const encoded = Buffer.from(`${clientId}:${clientSecret}`).toString(
+      "base64",
+    );
+
+    const tokenResponse = await fetch("https://api.notion.com/v1/oauth/token", {
       method: "POST",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Basic ${encoded}`,
       },
-      body: new URLSearchParams({
-        client_id: process.env.DISCORD_CLIENT_ID as string,
-        client_secret: process.env.DISCORD_CLIENT_SECRET as string,
+      body: JSON.stringify({
         grant_type: "authorization_code",
         code,
-        redirect_uri: process.env.DISCORD_REDIRECT_URI as string,
+        redirect_uri: redirectUri,
       }),
     });
 
@@ -46,16 +54,9 @@ export const GET = async (request: NextRequest) => {
 
     const tokenData = await tokenResponse.json();
 
-    if (!tokenData.access_token || !tokenData.refresh_token) {
+    if (!tokenData.access_token) {
       return Response.json(
         { message: "Invalid token response from Discord" },
-        { status: 400 },
-      );
-    }
-
-    if (!tokenData.webhook?.id) {
-      return Response.json(
-        { message: "Missing webhook data in response" },
         { status: 400 },
       );
     }
@@ -63,7 +64,7 @@ export const GET = async (request: NextRequest) => {
     const existingAccount = await db.account.findFirst({
       where: {
         userId,
-        providerId: "discord",
+        providerId: "notion",
       },
     });
 
@@ -73,28 +74,25 @@ export const GET = async (request: NextRequest) => {
         { status: 409 },
       );
     }
-
     await db.$transaction([
       db.account.create({
         data: {
           userId,
-          providerId: "discord",
+          providerId: "notion",
           accessToken: tokenData.access_token,
-          refreshToken: tokenData.refresh_token,
-          scope: tokenData.scope.split(" ").join(","),
-          accessTokenExpiresAt: new Date(
-            Date.now() + tokenData.expires_in * 1000,
-          ),
+          scope: "content:insert,content:update",
         },
       }),
-      db.discordWebhook.create({
+
+      db.notion.create({
         data: {
+          botId: tokenData.bot_id,
+          workscpaceId: tokenData.workscpace_id,
+          workspaceName: tokenData.workspace_name,
+          workspaceIcon: tokenData.workspace_icon,
+          owner: tokenData.owner,
+          duplicatedTemplateId: tokenData.duplicated_template_id,
           userId,
-          webhookId: tokenData.webhook.id,
-          webhookName: tokenData.webhook.name,
-          webhookUrl: tokenData.webhook.url,
-          guildId: tokenData.webhook.guild_id,
-          channelId: tokenData.webhook.channel_id,
         },
       }),
     ]);

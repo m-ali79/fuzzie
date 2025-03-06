@@ -4,54 +4,31 @@ import Image from "next/image";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-
-const CONNECTIONS = [
-  {
-    id: "google",
-    logo: "/googleDrive.png",
-    title: "Google Drive",
-    description: "Connect Google Drive to listen to folder changes",
-    oauthUrl: process.env.GOOGLE_OAUTH_URL || "",
-  },
-  {
-    id: "discord",
-    logo: "/discord.png",
-    title: "Discord",
-    description: "Connect your Discord to send notifications and messages",
-    oauthUrl: process.env.DISCORD_OAUTH_URL || "",
-  },
-  {
-    id: "notion",
-    logo: "/notion.png",
-    title: "Notion",
-    description: "Create entries in Notion and automate tasks",
-    oauthUrl: process.env.NOTION_OAUTH_URL || "",
-  },
-  {
-    id: "slack",
-    logo: "/slack.png",
-    title: "Slack",
-    description: "Send notifications through your custom Slack bot",
-    oauthUrl: process.env.SLACK_OAUTH_URL || "",
-  },
-];
+import { CONNECTIONS } from "@/constants/connections";
 
 const getConnectionStatuses = async (
-  userId: string,
+  userId: string
 ): Promise<Record<string, boolean>> => {
   try {
     const accounts = await db.account.findMany({
       where: { userId },
-      select: { providerId: true, accessToken: true },
+      select: { providerId: true, scope: true },
     });
 
-    return accounts.reduce(
-      (acc, account) => ({
+    return CONNECTIONS.reduce((acc, connection) => {
+      const account = accounts.find((a) => a.providerId === connection.id);
+      if (!account?.scope) return { ...acc, [connection.id]: false };
+
+      const accountScopes = account.scope.split(" ");
+      const hasAllRequiredScopes = connection.requiredScopes.every(
+        (requiredScope) => accountScopes.includes(requiredScope)
+      );
+
+      return {
         ...acc,
-        [account.providerId]: !!account.accessToken,
-      }),
-      {},
-    );
+        [connection.id]: hasAllRequiredScopes,
+      };
+    }, {} as Record<string, boolean>);
   } catch (error) {
     console.error("Error fetching connection statuses:", error);
     return {};

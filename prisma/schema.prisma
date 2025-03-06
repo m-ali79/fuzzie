@@ -18,6 +18,7 @@ model User {
   sessions        Session[]
   accounts        Account[]
   discordWebhooks DiscordWebhook[]
+  Notion          Notion[]
 
   @@unique([email])
   @@map("user")
@@ -82,11 +83,16 @@ model DiscordWebhook {
   @@map("discordWebhook")
 }
 
-// Next planning
-// now i need to implment the discord,slack,and notion into my app to the access To their api
-// First make some static ui
-// configue the oAuth app on the platform with desired scopes that is needed
-// now i need to contrust a oAuth url Becacause provider will send me some data
-// maybe webhooks on https (so ngrok)
-// make api endpoint that will handle the webhooks
-// update db schema to store from the providers into db
+model Notion {
+  id                   String  @id @default(cuid())
+  botId                String
+  workscpaceId         String
+  workspaceName        String
+  workspaceIcon        String
+  owner                Json
+  duplicatedTemplateId String?
+  User                 User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String?
+
+  @@map("notion")
+}
